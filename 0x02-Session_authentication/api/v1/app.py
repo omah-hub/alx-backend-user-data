@@ -7,6 +7,11 @@ from api.v1.views import app_views
 from flask import Flask, jsonify, abort, request
 from flask_cors import (CORS, cross_origin)
 import os
+from api.v1.auth.auth import Auth
+from api.v1.auth.basic_auth import BasicAuth
+from api.v1.auth.session_auth import SessionAuth
+from api.v1.auth.session_exp_auth import SessionExpAuth
+from api.v1.auth.session_db_auth import SessionDBAuth
 
 
 app = Flask(__name__)
@@ -76,7 +81,7 @@ def before_request() -> str:
     if (auth.authorization_header(request)) is None:
         abort(401)
 
-    if (auth.current_user(request)) is None:
+    if (auth.current_user(request)) is auth.current_user(request):
         abort(403)
 
 
